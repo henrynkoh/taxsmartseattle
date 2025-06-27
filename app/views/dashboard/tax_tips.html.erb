@@ -1,0 +1,58 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-4">Tax Tips</h1>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Industry</th>
+            <th>Sentiment</th>
+            <th>Videos</th>
+            <th>Created</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tax_tips.each do |tax_tip| %>
+            <tr>
+              <td>
+                <strong><%= tax_tip.topic %></strong>
+                <% if tax_tip.strategy.present? %>
+                  <div class="small text-muted">
+                    <%= truncate(tax_tip.strategy.split("\n").first, length: 100) %>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <span class="badge bg-info"><%= tax_tip.industry %></span>
+              </td>
+              <td>
+                <span class="badge bg-<%= tax_tip.sentiment == 'positive' ? 'success' : tax_tip.sentiment == 'negative' ? 'danger' : 'secondary' %>">
+                  <%= tax_tip.sentiment %>
+                </span>
+              </td>
+              <td>
+                <%= tax_tip.videos.count %>
+                <div class="small text-muted">
+                  <%= tax_tip.videos.uploaded.count %> uploaded
+                </div>
+              </td>
+              <td>
+                <%= time_ago_in_words(tax_tip.created_at) %> ago
+              </td>
+              <td>
+                <%= link_to 'Source', tax_tip.source_url, target: '_blank', class: 'btn btn-sm btn-outline-primary' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> 

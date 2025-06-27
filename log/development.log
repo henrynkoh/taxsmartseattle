@@ -1,0 +1,76 @@
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-06-27 05:36:48.817860', '2025-06-27 05:36:48.817862') RETURNING "key" /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m
+Migrating to CreateTaxTips (20250627053625)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "tax_tips" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "topic" varchar, "industry" varchar, "strategy" text, "case_study" text, "sentiment" varchar, "source_url" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_tax_tips_on_topic" ON "tax_tips" ("topic") /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250627053625') RETURNING "version" /*application='Taxsmartseattle'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Taxsmartseattle'*/[0m
+Migrating to CreateVideos (20250627053626)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "videos" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tax_tip_id" integer NOT NULL, "script" varchar, "video_path" varchar, "thumbnail_path" varchar, "youtube_id" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a0d194a57f"
+FOREIGN KEY ("tax_tip_id")
+  REFERENCES "tax_tips" ("id")
+) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_videos_on_tax_tip_id" ON "videos" ("tax_tip_id") /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250627053626') RETURNING "version" /*application='Taxsmartseattle'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m
+Migrating to CreateTaxTips (20250627054242)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "tax_tips" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "topic" varchar, "industry" varchar, "strategy" text, "case_study" text, "sentiment" float, "source_url" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m
+Migrating to CreateTaxTips (20250627054242)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "tax_tips" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "topic" varchar, "industry" varchar, "strategy" text, "case_study" text, "sentiment" float, "source_url" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m
+Migrating to UpdateTaxTipsAndVideos (20250627054542)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TEMPORARY TABLE "atax_tips" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "topic" varchar, "industry" varchar, "strategy" text, "case_study" text, "sentiment" varchar, "source_url" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_atax_tips_on_topic" ON "atax_tips" ("topic") /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "atax_tips" ("id","topic","industry","strategy","case_study","sentiment","source_url","created_at","updated_at")
+                     SELECT "id","topic","industry","strategy","case_study","sentiment","source_url","created_at","updated_at" FROM "tax_tips" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "tax_tips" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "tax_tips" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "topic" varchar, "industry" varchar, "strategy" text, "case_study" text, "sentiment" float, "source_url" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_tax_tips_on_topic" ON "tax_tips" ("topic") /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "tax_tips" ("id","topic","industry","strategy","case_study","sentiment","source_url","created_at","updated_at")
+                     SELECT "id","topic","industry","strategy","case_study","sentiment","source_url","created_at","updated_at" FROM "atax_tips" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "atax_tips" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "avideos" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tax_tip_id" integer NOT NULL, "script" varchar, "video_path" varchar, "thumbnail_path" varchar, "youtube_id" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_avideos_on_tax_tip_id" ON "avideos" ("tax_tip_id") /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "avideos" ("id","tax_tip_id","script","video_path","thumbnail_path","youtube_id","status","created_at","updated_at")
+                     SELECT "id","tax_tip_id","script","video_path","thumbnail_path","youtube_id","status","created_at","updated_at" FROM "videos" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "videos" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "videos" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tax_tip_id" integer NOT NULL, "script" text, "video_path" varchar, "thumbnail_path" varchar, "youtube_id" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a0d194a57f"
+FOREIGN KEY ("tax_tip_id")
+  REFERENCES "tax_tips" ("id")
+) /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_videos_on_tax_tip_id" ON "videos" ("tax_tip_id") /*application='Taxsmartseattle'*/[0m
+  [1m[35mSQL (0.0ms)[0m  [1m[32mINSERT INTO "videos" ("id","tax_tip_id","script","video_path","thumbnail_path","youtube_id","status","created_at","updated_at")
+                     SELECT "id","tax_tip_id","script","video_path","thumbnail_path","youtube_id","status","created_at","updated_at" FROM "avideos" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "avideos" /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='Taxsmartseattle'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "videos" ADD "title" varchar /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250627054542') RETURNING "version" /*application='Taxsmartseattle'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='Taxsmartseattle'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Taxsmartseattle'*/[0m

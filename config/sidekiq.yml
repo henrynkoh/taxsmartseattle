@@ -1,0 +1,14 @@
+:verbose: false
+:concurrency: 5
+:timeout: 30
+
+:queues:
+  - default
+  - mailers
+
+:schedule:
+  crawl_tax_tips_job:
+    cron: '0 6 * * 3,0'  # Every Wednesday and Sunday at 6 AM
+    class: CrawlTaxTipsJob
+    queue: default
+    description: "Crawl tax tips from various sources" 

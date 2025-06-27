@@ -1,0 +1,100 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-4">Dashboard</h1>
+  </div>
+  <div class="col text-end">
+    <%= button_to 'Force Crawl', force_crawl_path, class: 'btn btn-primary', data: { turbo_confirm: 'Start a new tax tips crawl?' } %>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Tax Tips</h5>
+        <h2 class="card-text"><%= @stats[:total_tax_tips] %></h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Videos</h5>
+        <h2 class="card-text"><%= @stats[:total_videos] %></h2>
+        <div class="small text-muted">
+          <%= @stats[:uploaded_videos] %> uploaded,
+          <%= @stats[:pending_videos] %> pending,
+          <%= @stats[:failed_videos] %> failed
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Recent Tax Tips</h5>
+        <%= link_to 'View All', tax_tips_path, class: 'btn btn-sm btn-outline-primary' %>
+      </div>
+      <div class="card-body">
+        <div class="list-group list-group-flush">
+          <% @tax_tips.each do |tax_tip| %>
+            <div class="list-group-item">
+              <h6 class="mb-1"><%= tax_tip.topic %></h6>
+              <p class="mb-1 text-muted"><%= tax_tip.industry %></p>
+              <small>
+                <%= pluralize(tax_tip.videos.count, 'video') %> |
+                <%= time_ago_in_words(tax_tip.created_at) %> ago
+              </small>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Recent Videos</h5>
+        <%= link_to 'View All', videos_path, class: 'btn btn-sm btn-outline-primary' %>
+      </div>
+      <div class="card-body">
+        <div class="list-group list-group-flush">
+          <% @videos.each do |video| %>
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1"><%= video.tax_tip.topic %></h6>
+                  <p class="mb-1">
+                    <span class="badge bg-<%= video.status == 'uploaded' ? 'success' : video.status == 'failed' ? 'danger' : 'warning' %>">
+                      <%= video.status %>
+                    </span>
+                  </p>
+                  <small><%= time_ago_in_words(video.created_at) %> ago</small>
+                </div>
+                
+                <div>
+                  <% if video.status == 'pending' %>
+                    <%= button_to 'Approve',
+                        approve_video_path(video),
+                        class: 'btn btn-sm btn-success',
+                        data: { turbo_confirm: 'Approve this video for production?' } %>
+                  <% elsif video.status == 'failed' %>
+                    <%= button_to 'Retry',
+                        retry_video_path(video),
+                        class: 'btn btn-sm btn-warning',
+                        data: { turbo_confirm: 'Retry this video?' } %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

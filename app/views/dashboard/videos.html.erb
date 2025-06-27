@@ -1,0 +1,81 @@
+<div class="row mb-4">
+  <div class="col">
+    <h1 class="display-4">Videos</h1>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Tax Tip</th>
+            <th>Script</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @videos.each do |video| %>
+            <tr>
+              <td>
+                <strong><%= video.tax_tip.topic %></strong>
+                <div class="small text-muted">
+                  <%= video.tax_tip.industry %>
+                </div>
+              </td>
+              <td>
+                <% if video.script.present? %>
+                  <div class="small">
+                    <%= truncate(video.script, length: 100) %>
+                  </div>
+                <% else %>
+                  <span class="text-muted">No script yet</span>
+                <% end %>
+              </td>
+              <td>
+                <span class="badge bg-<%= video.status == 'uploaded' ? 'success' : video.status == 'failed' ? 'danger' : 'warning' %>">
+                  <%= video.status %>
+                </span>
+              </td>
+              <td>
+                <%= time_ago_in_words(video.created_at) %> ago
+              </td>
+              <td>
+                <div class="btn-group">
+                  <% if video.status == 'pending' %>
+                    <%= button_to 'Approve',
+                        approve_video_path(video),
+                        class: 'btn btn-sm btn-success',
+                        data: { turbo_confirm: 'Approve this video for production?' } %>
+                  <% elsif video.status == 'failed' %>
+                    <%= button_to 'Retry',
+                        retry_video_path(video),
+                        class: 'btn btn-sm btn-warning',
+                        data: { turbo_confirm: 'Retry this video?' } %>
+                  <% end %>
+                  
+                  <% if video.youtube_id.present? %>
+                    <%= link_to 'Watch',
+                        "https://youtube.com/watch?v=#{video.youtube_id}",
+                        class: 'btn btn-sm btn-primary',
+                        target: '_blank' %>
+                  <% end %>
+                  
+                  <% if video.video_path.present? && File.exist?(video.video_path) %>
+                    <%= link_to 'Preview',
+                        video.video_path.sub('public', ''),
+                        class: 'btn btn-sm btn-info',
+                        target: '_blank' %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> 
