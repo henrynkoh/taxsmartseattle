@@ -18,7 +18,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 # Background Jobs
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 8.0"
 gem "sidekiq-scheduler"
 
 # API Clients
